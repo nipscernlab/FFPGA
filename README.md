@@ -1,2 +1,0 @@
-# FFPGA
-Fractal FPGA Project

@@ -1,0 +1,53 @@
+:root {
+    /* Cores principais do tema escuro */
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    
+    /* Cores de destaque - tons de roxo/violeta */
+    --accent-primary: #9d4edd;
+    --accent-secondary: #7b2cbf;
+    --accent-tertiary: #5a189a;
+    --accent-hover: #c77dff;
+    
+    /* Cores de texto */
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --text-tertiary: #6c757d;
+    
+    /* Cores de interface */
+    --ui-border: #444444;
+    --ui-shadow: rgba(0, 0, 0, 0.3);
+    --ui-overlay: rgba(0, 0, 0, 0.7);
+    
+    /* Alertas e status */
+    --success: #57cc99;
+    --warning: #ffb703;
+    --error: #e63946;
+    --info: #4cc9f0;
+    
+    /* Tamanhos */
+    --sidebar-width: 300px;
+    --titlebar-height: 36px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Fontes */
+    --font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', sans-serif;
+    --font-size-small: 0.85rem;
+    --font-size-normal: 1rem;
+    --font-size-medium: 1.2rem;
+    --font-size-large: 1.5rem;
+    --font-size-xlarge: 2rem;
+    
+    /* Animações */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }

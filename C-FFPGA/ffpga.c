@@ -17,7 +17,7 @@
 // Default parameters - can be overridden by command line
 #define DEFAULT_WIDTH     1920
 #define DEFAULT_HEIGHT    1080
-#define DEFAULT_MAX_ITER  10000000
+#define DEFAULT_MAX_ITER  100000000
 #define DEFAULT_ZOOM      1.0
 #define DEFAULT_CENTER_X  -0.5
 #define DEFAULT_CENTER_Y  0.0

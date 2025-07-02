@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorador de Fractais</title>
+  <link rel="stylesheet" href="src/styles/variables.css">
+  <link rel="stylesheet" href="src/styles/main.css">
+  <link rel="stylesheet" href="src/styles/modal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <!-- Barra de título customizada -->
+  <div class="titlebar">
+    <div class="titlebar-text">Explorador de Fractais</div>
+    <div class="titlebar-controls">
+      <button id="minimize-btn" class="titlebar-button">
+        <i class="fa-solid fa-window-minimize"></i>
+      </button>
+      <button id="maximize-btn" class="titlebar-button">
+        <i class="fa-solid fa-window-maximize"></i>
+      </button>
+      <button id="close-btn" class="titlebar-button close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Container principal da aplicação -->
+  <div class="app-container">
+    <!-- Barra lateral com botões e controles -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="assets/icons/app-icon.svg" alt="Logo Fractal" class="app-logo">
+        <h1>Fractal Explorer</h1>
+      </div>
+      
+      <div class="controls-section">
+        <button id="education-btn" class="control-btn primary">
+          <i class="fa-solid fa-book"></i>
+          <span>Aprender sobre Fractais</span>
+        </button>
+        
+        <div class="control-group">
+          <h3>Navegação</h3>
+          <button id="zoom-in-btn" class="control-btn">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+            <span>Ampliar</span>
+          </button>
+          <button id="zoom-out-btn" class="control-btn">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+            <span>Reduzir</span>
+          </button>
+          <button id="reset-view-btn" class="control-btn">
+            <i class="fa-solid fa-arrows-to-circle"></i>
+            <span>Resetar Visualização</span>
+          </button>
+        </div>
+
+        <div class="control-group">
+            <h3>Histórico</h3>
+            <div class="button-group">
+              <button id="history-back" class="control-btn" disabled>
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>Anterior</span>
+              </button>
+              <button id="history-forward" class="control-btn" disabled>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Próximo</span>
+              </button>
+            </div>
+            <button id="save-position" class="control-btn">
+              <i class="fa-solid fa-bookmark"></i>
+              <span>Salvar Posição</span>
+            </button>
+            <div class="history-container">
+              <h4>Posições Salvas</h4>
+              <div id="history-list" class="history-list">
+                <!-- O histórico será preenchido dinamicamente -->
+              </div>
+            </div>
+          </div>
+
+        <div class="control-group">
+          <h3>Configurações</h3>
+          <div class="slider-control">
+            <label for="iterations-slider">Iterações: <span id="iterations-value">100</span></label>
+            <input type="range" id="iterations-slider" min="20" max="500" value="100">
+          </div>
+          
+          <div class="slider-control">
+            <label for="color-scheme">Esquema de Cores:</label>
+            <select id="color-scheme">
+              <option value="rainbow">Arco-íris</option>
+              <option value="purpleblue">Roxo-Azul</option>
+              <option value="fire">Fogo</option>
+              <option value="electric">Elétrico</option>
+              <option value="grayscale">Escala de Cinza</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Locais Interessantes</h3>
+        <div class="locations-container">
+          <div id="locations-list" class="locations-list">
+            <!-- Lista de locais interessantes será preenchida dinamicamente -->
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Tipo de Fractal</h3>
+        <select id="fractal-type">
+          <option value="mandelbrot">Conjunto de Mandelbrot</option>
+          <option value="julia">Conjunto de Julia</option>
+        </select>
+        
+        <div id="julia-parameters" class="parameter-group" style="display: none;">
+          <h4>Parâmetros de Julia</h4>
+          <div class="parameter-controls">
+            <label>Real: <span id="julia-real-value">-0.7</span></label>
+            <input type="range" id="julia-real" min="-2" max="2" step="0.01" value="-0.7">
+            
+            <label>Imaginário: <span id="julia-imag-value">0.27015</span></label>
+            <input type="range" id="julia-imag" min="-2" max="2" step="0.01" value="0.27015">
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Área principal com o visualizador de fractais -->
+    <main class="fractal-viewer-container">
+      <canvas id="fractal-canvas"></canvas>
+      <div class="canvas-overlay">
+        <div class="coordinates">
+          <span id="mouse-coords">X: 0.000, Y: 0.000</span>
+          <span id="zoom-level">Zoom: 1.0x</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal educativo -->
+  <div id="education-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Introdução aos Fractais</h2>
+        <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="intro">O que são Fractais?</button>
+          <button class="tab-btn" data-tab="mandelbrot">Conjunto de Mandelbrot</button>
+          <button class="tab-btn" data-tab="chaos">Teoria do Caos</button>
+          <button class="tab-btn" data-tab="applications">Aplicações</button>
+        </div>
+        
+        <div id="intro" class="tab-content active">
+          <h3>O que são Fractais?</h3>
+          <p>Fractais são objetos geométricos complexos que exibem autossimilaridade em diferentes escalas. Isso significa que, não importa o quanto você amplie, você continuará encontrando padrões semelhantes.</p>
+          <div class="image-container">
+            <img src="assets/images/mandelbrot-example.png" alt="Exemplo de Fractal">
+          </div>
+          <p>Os fractais têm dimensões fracionárias e são regidos por regras matemáticas recursivas relativamente simples que podem gerar estruturas de enorme complexidade.</p>
+        </div>
+        
+        <div id="mandelbrot" class="tab-content">
+          <h3>O Conjunto de Mandelbrot</h3>
+          <p>O conjunto de Mandelbrot é um dos fractais mais famosos, descoberto por Benoît Mandelbrot em 1980.</p>
+          <p>É definido matematicamente pela função iterativa:</p>
+          <div class="math-formula">
+            z<sub>n+1</sub> = z<sub>n</sub>² + c
+          </div>
+          <p>Onde z e c são números complexos. Um ponto c está no conjunto se, começando com z₀ = 0, a sequência permanecer limitada quando iterada.</p>
+        </div>
+        
+        <div id="chaos" class="tab-content">
+          <h3>Teoria do Caos</h3>
+          <p>A Teoria do Caos estuda o comportamento de sistemas dinâmicos altamente sensíveis às condições iniciais.</p>
+          <p>Os fractais estão intrinsecamente relacionados à teoria do caos, pois demonstram como regras simples podem levar a comportamentos complexos e aparentemente imprevisíveis.</p>
+          <p>O "Efeito Borboleta" é um conceito famoso da teoria do caos que ilustra como pequenas mudanças nas condições iniciais podem resultar em grandes diferenças nos resultados.</p>
+        </div>
+        
+        <div id="applications" class="tab-content">
+          <h3>Aplicações dos Fractais</h3>
+          <ul>
+            <li><strong>Compressão de imagens:</strong> Algoritmos de compressão fractal podem representar imagens naturais de forma eficiente.</li>
+            <li><strong>Computação gráfica:</strong> Geração de paisagens e texturas naturais realistas.</li>
+            <li><strong>Antenas:</strong> Antenas fractais são usadas em telecomunicações devido à sua eficiência em múltiplas frequências.</li>
+            <li><strong>Medicina:</strong> Análise de padrões fractais em vasos sanguíneos, pulmões e outros órgãos.</li>
+            <li><strong>Economia:</strong> Modelagem de mercados financeiros e análise de séries temporais.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn primary">Começar a Explorar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="src/scripts/ui-controller.js"></script>
+  <script src="src/scripts/mandelbrot.js"></script>
+  <script src="src/scripts/fractal-renderer.js"></script>
+  <script src="src/scripts/education-content.js"></script>
+</body>
+</html>
