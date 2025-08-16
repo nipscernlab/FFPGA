@@ -1,14 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
 
 block_cipher = None
+
+# Monta a lista de datas sem None
+datas_list = []
+if os.path.exists('assets'):
+    datas_list.append(('assets', 'assets'))
 
 a = Analysis(
     ['fancyFractal.py'],
     pathex=[],
     binaries=[],
-    datas=[
-        ('assets', 'assets') if os.path.exists('assets') else None,
-    ],
+    datas=datas_list,
     hiddenimports=[
         'customtkinter',
         'PIL._tkinter_finder',
@@ -28,9 +32,6 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
-
-# Filter out None values from datas
-a.datas = [item for item in a.datas if item is not None]
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
