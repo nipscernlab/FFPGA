@@ -1,0 +1,45 @@
+ERROR:root:Erro fatal durante a inicialização da aplicação: 'EnhancedFractalVisualizer' object has no attribute '_save_image'
+Traceback (most recent call last):
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 1363, in main
+    visualizer = EnhancedFractalVisualizer(initial_file_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 487, in __init__
+    self._setup_ui()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 510, in _setup_ui
+    self._create_sidebar()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 554, in _create_sidebar
+    self._create_actions_section(sidebar)
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 734, in _create_actions_section
+    ("Save Image", self._save_image, "save_image", self.COLORS['success']),
+                   ^^^^^^^^^^^^^^^^
+AttributeError: 'EnhancedFractalVisualizer' object has no attribute '_save_image'
+ERROR:root:Erro fatal durante a inicialização da aplicação: 'EnhancedFractalVisualizer' object has no attribute '_save_image'
+Traceback (most recent call last):
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 1368, in main
+    visualizer = EnhancedFractalVisualizer(initial_file_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 487, in __init__
+    self._setup_ui()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 510, in _setup_ui
+    self._create_sidebar()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 554, in _create_sidebar
+    self._create_actions_section(sidebar)
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 734, in _create_actions_section
+    ("Save Image", self._save_image, "save_image", self.COLORS['success']),
+                   ^^^^^^^^^^^^^^^^
+AttributeError: 'EnhancedFractalVisualizer' object has no attribute '_save_image'
+ERROR:root:Erro fatal durante a inicialização da aplicação: 'EnhancedFractalVisualizer' object has no attribute '_save_image'
+Traceback (most recent call last):
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 1375, in main
+    visualizer = EnhancedFractalVisualizer(initial_file_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 487, in __init__
+    self._setup_ui()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 510, in _setup_ui
+    self._create_sidebar()
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 554, in _create_sidebar
+    self._create_actions_section(sidebar)
+  File "c:\Users\LCOM\Documents\Github\FFPGA\fancyFFPGA\fancyFractal.py", line 734, in _create_actions_section
+    ("Save Image", self._save_image, "save_image", self.COLORS['success']),
+                   ^^^^^^^^^^^^^^^^
+AttributeError: 'EnhancedFractalVisualizer' object has no attribute '_save_image'

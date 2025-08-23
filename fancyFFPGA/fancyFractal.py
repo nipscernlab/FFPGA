@@ -1177,33 +1177,56 @@ class EnhancedFractalVisualizer:
             self.status_label.configure(text=f"Ready • File: {self.data_file_path.name}")
     
     def _save_image(self):
-        """Save the current fractal image"""
-        if not self.processed_image:
-            messagebox.showwarning("No Image", "No fractal image to save")
-            return
-        
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        default_filename = f"fractal_{self.settings.palette}_{self.settings.theme}_{timestamp}.png"
-        
-        file_path = filedialog.asksaveasfilename(
-            defaultextension=".png",
-            initialfilename=default_filename,
-            filetypes=[
-                ("PNG files", "*.png"),
-                ("JPEG files", "*.jpg"),
-                ("All files", "*.*")
-            ]
-        )
-        
-        if file_path:
-            try:
-                self.processed_image.save(file_path, optimize=True, quality=95)
-                self._update_status(f"Image saved: {Path(file_path).name}")
-                messagebox.showinfo("Success", f"Image saved successfully!\n{Path(file_path).name}")
+        """Save the current fractal image with simplified logic"""
+        try:
+            # Check if we have fractal data
+            if self.fractal_data is None or self.pixels_read == 0:
+                messagebox.showwarning("No Image", "No fractal data available to save")
+                return
+            
+            # Force render the current fractal state
+            if self.fractal_data is not None:
+                # Get visible rows (even if incomplete)
+                visible_rows = min(self.settings.height, (self.pixels_read + self.settings.width - 1) // self.settings.width)
+                if visible_rows == 0:
+                    messagebox.showwarning("No Image", "No pixel data to save")
+                    return
                 
-            except Exception as e:
-                self.log_manager.logger.error(f"Error saving image: {e}")
-                messagebox.showerror("Save Error", f"Failed to save image:\n{str(e)}")
+                # Create image from current data
+                data = self.fractal_data[:visible_rows, :].copy()
+                enhanced_data = FractalTheme.apply_theme(data, self.settings.theme, self.settings)
+                enhanced_data = self._apply_enhancements(enhanced_data)
+                indices = np.clip(enhanced_data * 1023, 0, 1023).astype(int)
+                
+                current_palette = self.color_palettes[self.settings.palette]
+                rgb_data = current_palette[indices]
+                
+                # Create PIL image
+                save_image = Image.fromarray(rgb_data, 'RGB')
+                save_image = self._apply_image_enhancements(save_image)
+            
+            # Generate filename
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"fractal_{self.settings.width}x{self.settings.height}_{self.settings.palette}_{timestamp}.png"
+            
+            # Save in same directory as input file
+            save_path = self.data_file_path.parent / filename
+            
+            # Save with maximum quality
+            save_image.save(str(save_path), "PNG", optimize=False, compress_level=0)
+            
+            # Update UI
+            self._update_status(f"Image saved: {filename}")
+            messagebox.showinfo("Success", f"Image saved successfully!\n{filename}\n\nLocation: {save_path}")
+            
+            # Log the save operation
+            self.log_manager.logger.info(f"Image saved: {save_path}")
+            
+        except Exception as e:
+            error_msg = f"Failed to save image: {str(e)}"
+            self.log_manager.logger.error(error_msg)
+            messagebox.showerror("Save Error", error_msg)
+            print(f"Save error: {e}")  # Also print to console for debugging
     
     def _show_log(self):
         """Show the fractal generation log"""
